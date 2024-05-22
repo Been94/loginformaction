@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 interface IFormInput {
   svgPath1: string;
   svgPath2?: string;
@@ -8,6 +10,16 @@ interface IFormInput {
 }
 
 export function FormInputComponent(props: IFormInput) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current !== null) {
+      if (props.errors) {
+        inputRef.current.value = "";
+        inputRef.current.focus();
+      }
+    }
+  }, [inputRef, props.errors]);
+
   return (
     <>
       <div className="border border-neutral-400 w-full h-14 rounded-full px-4 bg-transparent transition-all [&:has(:focus-visible)]:ring-2  ring-neutral-400 ring-offset-2">
@@ -25,7 +37,8 @@ export function FormInputComponent(props: IFormInput) {
             </svg>
           </div>
           <input
-            className="w-full px-3 outline-none "
+            ref={inputRef}
+            className="w-full px-3 outline-none"
             placeholder={props.textData}
             name={props.textData}
             type={props.inputData}
@@ -60,9 +73,6 @@ export function FormInputComponent(props: IFormInput) {
             <span>{error}</span>
           </div>
         </div>
-        // <span key={index} className="text-red-500 font-medium">
-        //   {error}
-        // </span>
       ))}
       {props.success?.map((success, index) => (
         <>
@@ -88,15 +98,10 @@ export function FormInputComponent(props: IFormInput) {
                   ></path>
                 </svg>
               </div>
-
               <span>{success}</span>
             </div>
           </div>
         </>
-
-        // <span key={index} className="text-green-500 font-medium">
-        //   {error}
-        // </span>
       ))}
     </>
   );

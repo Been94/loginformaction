@@ -3,7 +3,6 @@ import { useFormState } from "react-dom";
 import { FormInputComponent } from "../components/Form-Input";
 import FormButton from "../components/Form-btn";
 import { InputTypeString, LogoComponent } from "../etc";
-import { error } from "console";
 import { handleForm } from "./actions";
 
 export function Main() {
@@ -36,19 +35,7 @@ export function Main() {
               errors={state?.errors ?? []}
               success={state?.success ?? []}
             />
-            <div>
-              <FormButton text="Log in" />
-
-              {/* <button className="w-full h-14 rounded-full px-4 bg-[#efeae8] cursor-pointer font-bold">
-                Log in
-              </button> */}
-
-              {/* <div className="w-full h-14 rounded-full px-4 bg-[#efeae8] cursor-pointer">
-                <div className="w-full h-full flex justify-center items-center font-bold">
-                  <span>Log in</span>
-                </div>
-              </div> */}
-            </div>
+            <FormButton text="Log in" />
           </form>
         </div>
       </div>
