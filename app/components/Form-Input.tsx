@@ -1,24 +1,26 @@
-import { useEffect, useRef } from "react";
+import { InputHTMLAttributes, useEffect, useRef } from "react";
 
 interface IFormInput {
   svgPath1: string;
   svgPath2?: string;
-  textData: string;
-  inputData: string;
   errors?: string[];
   success?: string[];
 }
 
-export function FormInputComponent(props: IFormInput) {
+export function FormInputComponent({
+  svgPath1,
+  svgPath2,
+  errors,
+  success,
+  ...extraProps
+}: IFormInput & InputHTMLAttributes<HTMLInputElement>) {
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (inputRef.current !== null) {
-      if (props.errors) {
-        inputRef.current.value = "";
-        inputRef.current.focus();
-      }
+      inputRef.current.value = "";
+      inputRef.current.focus();
     }
-  }, [inputRef, props.errors]);
+  }, [errors]);
 
   return (
     <>
@@ -32,21 +34,22 @@ export function FormInputComponent(props: IFormInput) {
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
             >
-              <path d={props.svgPath1}></path>
-              <path d={props.svgPath2}></path>
+              <path d={svgPath1}></path>
+              <path d={svgPath2}></path>
             </svg>
           </div>
           <input
             ref={inputRef}
             className="w-full px-3 outline-none"
-            placeholder={props.textData}
-            name={props.textData}
-            type={props.inputData}
-            required={true}
+            // placeholder={textData}
+            // name={textData}
+            // type={inputData}
+            // required={true}
+            {...extraProps}
           />
         </div>
       </div>
-      {props.errors?.map((error, index) => (
+      {errors?.map((error, index) => (
         <div
           key={index}
           className="bg-red-500 w-full h-14 rounded-xl px-4 text-black"
@@ -74,7 +77,7 @@ export function FormInputComponent(props: IFormInput) {
           </div>
         </div>
       ))}
-      {props.success?.map((success, index) => (
+      {success?.map((success, index) => (
         <>
           <div
             key={index}
