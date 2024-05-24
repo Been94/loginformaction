@@ -5,6 +5,41 @@ export const InputTypeString = {
   submit: "submit",
 };
 
+interface IMsgViewer {
+  colorData: string;
+  data: string;
+  error: string;
+}
+
+export function MsgViewer({ colorData, data, error }: IMsgViewer) {
+  return (
+    <>
+      <div className={`${colorData} w-full h-14 rounded-xl px-4 text-black`}>
+        <div className="w-full h-full flex flex-row justify-start items-center gap-4 font-bold">
+          <div className="w-6 h-6">
+            <svg
+              data-slot="icon"
+              fill="none"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d={data}
+              ></path>
+            </svg>
+          </div>
+          <span>{error}</span>
+        </div>
+      </div>
+    </>
+  );
+}
+
 export function LogoComponent() {
   return (
     <>
