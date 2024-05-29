@@ -12,7 +12,7 @@ export default function FormButton(props: FormButtonProps) {
       <div>
         <button
           disabled={pending}
-          className="w-full h-14 rounded-full px-4 bg-[#efeae8] cursor-pointer font-bold disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-white"
+          className="w-full h-14 rounded-full px-4 bg-[#efeae8] cursor-pointer font-bold disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-white hover:bg-neutral-300 hover:transition-all"
         >
           {pending ? "Loading..." : props.text}
         </button>
