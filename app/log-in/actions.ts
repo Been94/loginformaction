@@ -20,17 +20,19 @@ const checkEmailExists = async (email: string) => {
 };
 
 const formSchema = z.object({
-  username: z.string(), //.min(5, "Username should be at least 5 characters long."),
-  email: z.string(),
-  // .email()
-  // .endsWith(emailOnly, `Only ${emailOnly} emails are allowed.`)
-  // .refine(checkEmailExists, "An account with this email does not exist."),
-  password: z.string(),
-  // .min(10, "Password should be at least 10 characters long.")
-  // .regex(
-  //   /[0-9]/,
-  //   "Password should contain at least one number (0123456789)."
-  // ),
+  username: z.string().min(5, "Username should be at least 5 characters long."),
+  email: z
+    .string()
+    .email()
+    .endsWith(emailOnly, `Only ${emailOnly} emails are allowed.`)
+    .refine(checkEmailExists, "An account with this email does not exist."),
+  password: z
+    .string()
+    .min(10, "Password should be at least 10 characters long.")
+    .regex(
+      /[0-9]/,
+      "Password should contain at least one number (0123456789)."
+    ),
 });
 
 export async function handleForm(prevState: any, formData: FormData) {
@@ -77,7 +79,7 @@ export async function handleForm(prevState: any, formData: FormData) {
         },
       };
     }
-    console.log(ok);
+    // console.log(ok);
 
     // return {
     //   formErrors: [],

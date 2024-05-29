@@ -44,28 +44,31 @@ const formSchema = z
   .object({
     username: z
       .string()
-      .refine(checkUsername, "This username is already taken"), //.min(5, "Username should be at least 5 characters long."),
+      .min(5, "Username should be at least 5 characters long.")
+      .refine(checkUsername, "This username is already taken"),
     email: z
       .string()
+      .email()
+      .endsWith(emailOnly, `Only ${emailOnly} emails are allowed.`)
       .refine(
         checkEmail,
         "There is an account already registered with that email."
       ),
     bio: z.string().max(100, "It's too long!"),
-    // .email()
-    // .endsWith(emailOnly, `Only ${emailOnly} emails are allowed.`),
-    password: z.string(),
-    // .min(10, "Password should be at least 10 characters long.")
-    // .regex(
-    //   /[0-9]/,
-    //   "Password should contain at least one number (0123456789)."
-    // ),
-    confirmPassword: z.string(),
-    // .min(10, "Password should be at least 10 characters long.")
-    // .regex(
-    //   /[0-9]/,
-    //   "Password should contain at least one number (0123456789)."
-    // ),
+    password: z
+      .string()
+      .min(10, "Password should be at least 10 characters long.")
+      .regex(
+        /[0-9]/,
+        "Password should contain at least one number (0123456789)."
+      ),
+    confirmPassword: z
+      .string()
+      .min(10, "Password should be at least 10 characters long.")
+      .regex(
+        /[0-9]/,
+        "Password should contain at least one number (0123456789)."
+      ),
   })
   .superRefine(async ({ username }, ctx) => {
     const user = await db.user.findUnique({
