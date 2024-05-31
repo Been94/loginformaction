@@ -16,7 +16,7 @@ export default function CreateAccount() {
         <div className="w-96 h-96 bg-transparent">
           <form
             action={dispatch}
-            className="grid grid-rows-311  h-full w-full gap-5"
+            className="grid grid-rows-377 h-full w-full gap-5"
           >
             <LogoComponent />
             <FormInputComponent
@@ -74,13 +74,13 @@ export default function CreateAccount() {
             />
 
             <FormButton text="SignUp" />
+            <div
+              onClick={() => router.back()}
+              className="w-full h-14 rounded-full px-4 bg-[#efeae8] cursor-pointer font-bold disabled:cursor-not-allowed disabled:bg-neutral-400 disabled:text-white hover:bg-neutral-300 hover:transition-all flex justify-center items-center"
+            >
+              <span>Back</span>
+            </div>
           </form>
-          <div
-            onClick={() => router.back()}
-            className="w-full h-14 rounded-full px-4 bg-[#efeae8] cursor-pointer font-bold mt-32 flex justify-center items-center hover:bg-neutral-300 hover:transition-all"
-          >
-            <span>Back</span>
-          </div>
         </div>
       </div>
     </>

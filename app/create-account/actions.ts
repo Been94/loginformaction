@@ -147,7 +147,7 @@ export async function handleSingUpForm(prevState: any, formData: FormData) {
     session.id = user.id;
     await session.save();
 
-    redirect("/profile");
+    redirect("/");
 
     //console.log(user);
 

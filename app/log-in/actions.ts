@@ -20,7 +20,6 @@ const checkEmailExists = async (email: string) => {
 };
 
 const formSchema = z.object({
-  username: z.string().min(5, "Username should be at least 5 characters long."),
   email: z
     .string()
     .email()
@@ -39,7 +38,6 @@ export async function handleForm(prevState: any, formData: FormData) {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   const data = {
-    username: formData.get("username"),
     email: formData.get("email"),
     password: formData.get("password"),
   };
@@ -69,24 +67,15 @@ export async function handleForm(prevState: any, formData: FormData) {
       const session = await getSession();
       session.id = user!.id;
       await session.save();
-      redirect("/profile");
+      redirect("/");
     } else {
       return {
         formErrors: [],
         fieldErrors: {
-          username: [],
+          email: [],
           password: ["Wrong Password!"],
         },
       };
     }
-    // console.log(ok);
-
-    // return {
-    //   formErrors: [],
-    //   fieldErrors: {
-    //     username: [],
-    //     password: ["Welcome Back!"],
-    //   },
-    // };
   }
 }
