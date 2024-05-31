@@ -17,7 +17,7 @@ async function getInitTweets() {
         },
       },
     },
-    take: 1,
+    take: 2,
     orderBy: {
       created_at: "desc",
     },

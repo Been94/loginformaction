@@ -59,7 +59,7 @@ export default function TweetList({ InitTweet }: ITweetList) {
           <>
             <span
               ref={trigger}
-              style={{ marginTop: `${page + 1 * 75}vh` }}
+              style={{ marginTop: `${page + 1 * 60}vh` }}
               className="mb-96 text-sm font-semibold bg-orange-500 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
             >
               {isLoading ? (
