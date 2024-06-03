@@ -2,18 +2,36 @@
 import TweetDetail from "@/app/components/TweetDetail";
 import { InitTweetsType } from "@/app/(home)/page";
 import { useEffect, useRef, useState } from "react";
-import { getMoreTweets } from "@/app/(home)/actions";
+import { getInitTweets, getMoreTweets } from "@/app/(home)/actions";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { TweetClickBtnState } from "../utils/atom";
+import { useRouter } from "next/navigation";
 
 interface ITweetList {
   InitTweet: InitTweetsType;
 }
 
 export default function TweetList({ InitTweet }: ITweetList) {
+  const router = useRouter();
   const [tweet, setTweet] = useState(InitTweet);
   const [isLoading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
   const trigger = useRef<HTMLSpanElement>(null);
+  const [clickBtnStatus, clickSetBtnStatus] =
+    useRecoilState(TweetClickBtnState);
+  useEffect(() => {
+    async function fetchAndSetTweet() {
+      if (clickBtnStatus) {
+        const newTweets = await getInitTweets(1);
+        setTweet([...newTweets]);
+        clickSetBtnStatus(false);
+        router.refresh();
+      }
+    }
+    fetchAndSetTweet();
+  }, [clickBtnStatus, tweet]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       async (
@@ -44,13 +62,13 @@ export default function TweetList({ InitTweet }: ITweetList) {
     return () => {
       observer.disconnect();
     };
-  }, [page]);
+  }, [page, tweet]);
 
   // const onLoadMoreClick = async () => {};
 
   return (
     <>
-      <div className="p-5 flex flex-col gap-5">
+      <div className="p-5 flex flex-col gap-5 mt-40">
         {tweet.map((data, index) => (
           <TweetDetail key={data.id} {...data} />
         ))}
@@ -59,8 +77,8 @@ export default function TweetList({ InitTweet }: ITweetList) {
           <>
             <span
               ref={trigger}
-              style={{ marginTop: `${page + 1 * 60}vh` }}
-              className="mb-96 text-sm font-semibold bg-orange-500 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
+              style={{ marginTop: `${page + 1 * 45}vh` }}
+              className="animate-bounce mb-96 text-sm font-semibold bg-orange-500 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
             >
               {isLoading ? (
                 "Loading..."

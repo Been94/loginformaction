@@ -21,3 +21,24 @@ export async function getMoreTweets(page: number) {
   });
   return tweets;
 }
+export async function getInitTweets(takeNumber: number) {
+  const tweets = await db.tweet.findMany({
+    select: {
+      tweet: true,
+      id: true,
+      created_at: true,
+      user: {
+        select: {
+          username: true,
+          email: true,
+        },
+      },
+    },
+    take: takeNumber,
+    orderBy: {
+      created_at: "desc",
+    },
+  });
+  return tweets;
+  //
+}
